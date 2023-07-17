@@ -18,6 +18,24 @@ func Parse(layout, value string) (TinyDate, error) {
 	return td, nil
 }
 
+// FromString is shortcut for MustParse("2006-01-02", value)
+func FromString(value string) TinyDate {
+	return MustParse(iso8601Date, value)
+}
+
+// MustParse panic-if-error version of Parse
+func MustParse(layout, value string) TinyDate {
+	t, err := time.Parse(layout, value)
+	if err != nil {
+		panic(fmt.Errorf("tinydate MustParse: %v", err))
+	}
+	td, err := FromTime(t)
+	if err != nil {
+		panic(fmt.Errorf("tinydate MustParse: %v", err))
+	}
+	return td
+}
+
 // ParseInLocation parses a layout into a TinyDate including a location.
 // The input is converted into UTC
 func ParseInLocation(layout, value string, loc *time.Location) (TinyDate, error) {

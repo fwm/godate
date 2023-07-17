@@ -12,6 +12,17 @@ func New(year, month, day int) (TinyDate, error) {
 	return FromTime(t)
 }
 
+// MustNew creates a new TinyDate just like New, but panics when error occurs
+// (and of course returns only TinyDate so that it can be inlined)
+// it will panic when too big year is specified, however we just don't care
+func MustNew(year, month, day int) TinyDate {
+	if td, err := New(year, month, day); err != nil {
+		panic(err)
+	} else {
+		return td
+	}
+}
+
 // Now returns the current date
 func Now() TinyDate {
 	td, _ := FromTime(time.Now())

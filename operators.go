@@ -60,3 +60,19 @@ func (td TinyDate) Equal(tu TinyDate) bool {
 func (td TinyDate) Sub(tu TinyDate) time.Duration {
 	return td.ToTime().Sub(tu.ToTime())
 }
+
+// Earliest returns the earliest of the two dates
+func Earliest(left, right TinyDate) TinyDate {
+	if left.Before(right) {
+		return left
+	}
+	return right
+}
+
+// Latest returns the latest of the two dates
+func Latest(left, right TinyDate) TinyDate {
+	if left.After(right) {
+		return left
+	}
+	return right
+}
